@@ -1,30 +1,28 @@
 'use client'
 
-import Link from 'next/link'
+import { useProdutos } from '@/context/produtoscontext'
+import Header from '@/components/header'
 
-export default function HomePage() {
+export default function Home() {
+  const { produtos } = useProdutos()
+
   return (
-    <div className="min-h-screen bg-gray-200">
-      <header className="bg-blue-900 text-white py-4 px-8 shadow-md">
-        <nav className="flex justify-between items-center">
-          <h1 className="text-xl font-bold">Wequit</h1>
-          <div className="space-x-4">
-            <Link href="/" className="hover:underline">Home</Link>
-            <Link href="/login" className="hover:underline">Login</Link>
-            <Link href="/register" className="hover:underline">Cadastro</Link>
-            <Link href="/estoque" className="hover:underline">Estoque</Link>
-          </div>
-        </nav>
-      </header>
-
-      <main className="flex flex-col items-center justify-center text-center px-6 py-20">
-        <h2 className="text-4xl font-bold text-gray-800 mb-4">Bem-vindo(a) à sua jornada empreendedora</h2>
-        <p className="text-lg text-gray-700 max-w-2xl">
-          Cada passo que você dá é uma semente plantada no solo fértil dos seus sonhos. Esta plataforma foi feita para apoiar microempreendedores como você,
-          oferecendo ferramentas simples e eficazes para que seu negócio cresça com mais organização, controle e confiança. Vamos transformar seu esforço diário
-          em grandes conquistas!
-        </p>
+    <>
+      <Header />
+      <main className="min-h-screen bg-white text-gray-900 p-8">
+        <h2 className="text-2xl font-bold mb-4">Produtos Cadastrados</h2>
+        {produtos.length === 0 ? (
+          <p className="text-gray-700">Nenhum produto cadastrado.</p>
+        ) : (
+          <ul className="space-y-2">
+            {produtos.map((produto) => (
+              <li key={produto.id} className="bg-gray-100 p-4 rounded-xl shadow-sm">
+                <strong>{produto.nome}</strong> — {produto.quantidade}
+              </li>
+            ))}
+          </ul>
+        )}
       </main>
-    </div>
+    </>
   )
 }
